@@ -1,0 +1,19 @@
+.main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-book {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.add-book-form {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
