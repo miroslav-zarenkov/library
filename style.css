@@ -1,19 +1,35 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
 .main-content {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex: 0 0 auto;
+    padding: 0;
+    margin: 0;
 }
 
 .add-book {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
     gap: 30px;
+    width: 800px;
 }
 
 .add-book-form {
     display: flex;
     flex-direction: row;
     gap: 30px;
+}
+
+.what {
+    padding: 10px;
+    margin: 10px;
+    background-color: aquamarine;
 }
