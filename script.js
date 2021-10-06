@@ -8,9 +8,15 @@ function Book(title, author, pages, read) {
 }
 
 function addBookToLibrary() {
-    myLibrary.push(bible, aGameOfThrones, theWisdomOfCrowds);
-}
+    let book = new Book(
+        document.querySelector("#book-title").value,
+        document.querySelector("#book-author").value,
+        document.querySelector("#book-pages").value,
+        document.querySelector("#book-read").checked)
 
-let bible = new Book("bible", "god", "1000", false);
-let aGameOfThrones = new Book("A Game of Thrones", "George R.R. Martin", "720", false);
-let theWisdomOfCrowds = new Book("The Wisdom of Crowd", "Joe Abercrombie", "528", false);
+    myLibrary.push(book);
+    document.querySelector("#book-title").value = "";
+    document.querySelector("#book-author").value = "";
+    document.querySelector("#book-pages").value = "";
+    document.querySelector("#book-read").checked = false;
+}
