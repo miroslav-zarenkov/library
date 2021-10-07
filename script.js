@@ -1,12 +1,16 @@
 let myLibrary = [];
 let book;
 let submitButton = document.querySelector("#submit-button");
+let cancelSubmitButton = document.querySelector("#cancel-submit-button")
 let bookList = document.querySelector(".book-list");
-let addBookForm = document.querySelector(".add-book-form")
-let addBookButton = document.querySelector("#add-book-button")
+let addBookForm = document.querySelector(".add-book-form");
+let addBookButton = document.querySelector("#add-book-button");
+let content = document.querySelector(".main-content");
+let bookNumber;
 
 submitButton.addEventListener("click", addBookToLibrary);
 submitButton.addEventListener("click", closeForm);
+cancelSubmitButton.addEventListener("click", closeForm);
 addBookButton.addEventListener("click", openForm);
 
 addSomeBooks();
@@ -55,12 +59,15 @@ function displayBooks() {
         const bookCardAuthor = document.createElement("div");
         const bookCardPages = document.createElement("div");
         const bookCardRead = document.createElement("div")
+        const bookCardDelete = document.createElement("button");
 
         bookCard.classList.add("book-card");
         bookCardTitle.classList.add("book-card-title");
         bookCardAuthor.classList.add("book-card-author");
         bookCardPages.classList.add("book-card-pages");
         bookCardRead.classList.add("book-card-read");
+
+        bookCard.setAttribute("data-number", `${i}`);
 
         bookCardTitle.textContent = myLibrary[i].title;
         bookCardAuthor.textContent = myLibrary[i].author;
@@ -70,19 +77,45 @@ function displayBooks() {
         } else {
             bookCardRead.textContent = "Not read";
         }
+        bookCardDelete.textContent = "Delete book";
 
         bookCard.appendChild(bookCardTitle);
         bookCard.appendChild(bookCardAuthor);
         bookCard.appendChild(bookCardPages);
-        bookCard.appendChild(bookCardRead)
+        bookCard.appendChild(bookCardRead);
+        bookCard.appendChild(bookCardDelete);
         bookList.appendChild(bookCard);
+
+        bookCardDelete.addEventListener("click", deleteBook)
+
+        bookCardRead.addEventListener("click", toggleRead)
     }
 }
 
 function openForm() {
+    content.classList.add("blur");
     addBookForm.style.display = "block";
+
 }
 
 function closeForm() {
+    content.classList.remove("blur");
     addBookForm.style.display = "none";
+}
+
+function deleteBook() {
+    let attribute = this.parentElement.getAttribute("data-number");
+    myLibrary.splice(attribute, 1);
+    this.parentElement.remove();
+}
+
+function toggleRead() {
+    let attribute = this.parentElement.getAttribute("data-number");
+    if (myLibrary[attribute].read) {
+        myLibrary[attribute].read = false;
+        this.textContent = "Not read";
+    } else {
+        myLibrary[attribute].read = true;
+        this.textContent = "Read";
+    }
 }
