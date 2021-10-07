@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
     <title>Library</title>
 </head>
 
@@ -17,28 +18,30 @@
         </div>
         <div class="book-list"></div>
     </div>
-    <div class="add-book-form">
-        <div>
-            <p>Book title</p>
-            <input type=text id="book-title">
-        </div>
-        <div>
-            <p>Book author</p>
-            <input type=text id="book-author">
-        </div>
-        <div>
-            <p>Book pages</p>
-            <input type=number id="book-pages">
-        </div>
-        <div>
-            <p>Read</p>
-            <input type=checkbox id="book-read">
-        </div>
-        <div>
-            <button id="submit-button">Submit</button>
-        </div>
-        <div>
-            <button id="cancel-submit-button">Cancel</button>
+    <div class="add-book-form-container">
+        <div class="add-book-form">
+            <div>
+                <p>Book title</p>
+                <input type=text id="book-title" maxlength="30">
+            </div>
+            <div>
+                <p>Book author</p>
+                <input type=text id="book-author">
+            </div>
+            <div>
+                <p>Book pages</p>
+                <input type=number id="book-pages" min="0">
+            </div>
+            <div>
+                <p>Read</p>
+                <input type=checkbox id="book-read">
+            </div>
+            <div>
+                <button id="submit-button">Submit</button>
+            </div>
+            <div>
+                <button id="cancel-submit-button">Cancel</button>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>

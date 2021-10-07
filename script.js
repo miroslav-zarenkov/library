@@ -3,10 +3,10 @@ let book;
 let submitButton = document.querySelector("#submit-button");
 let cancelSubmitButton = document.querySelector("#cancel-submit-button")
 let bookList = document.querySelector(".book-list");
-let addBookForm = document.querySelector(".add-book-form");
+let addBookForm = document.querySelector(".add-book-form-container");
 let addBookButton = document.querySelector("#add-book-button");
 let content = document.querySelector(".main-content");
-let bookNumber;
+let attribute;
 
 submitButton.addEventListener("click", addBookToLibrary);
 submitButton.addEventListener("click", closeForm);
@@ -87,7 +87,6 @@ function displayBooks() {
         bookList.appendChild(bookCard);
 
         bookCardDelete.addEventListener("click", deleteBook)
-
         bookCardRead.addEventListener("click", toggleRead)
     }
 }
@@ -104,13 +103,13 @@ function closeForm() {
 }
 
 function deleteBook() {
-    let attribute = this.parentElement.getAttribute("data-number");
+    attribute = this.parentElement.getAttribute("data-number");
     myLibrary.splice(attribute, 1);
     this.parentElement.remove();
 }
 
 function toggleRead() {
-    let attribute = this.parentElement.getAttribute("data-number");
+    attribute = this.parentElement.getAttribute("data-number");
     if (myLibrary[attribute].read) {
         myLibrary[attribute].read = false;
         this.textContent = "Not read";
