@@ -3,7 +3,7 @@ let book;
 let submitButton = document.querySelector("#submit-button");
 let cancelSubmitButton = document.querySelector("#cancel-submit-button")
 let bookList = document.querySelector(".book-list");
-let addBookForm = document.querySelector(".add-book-form-container");
+let addBookFormContainer = document.querySelector(".add-book-form-container");
 let addBookButton = document.querySelector("#add-book-button");
 let content = document.querySelector(".main-content");
 let attribute;
@@ -13,9 +13,8 @@ submitButton.addEventListener("click", closeForm);
 cancelSubmitButton.addEventListener("click", closeForm);
 addBookButton.addEventListener("click", openForm);
 
-addSomeBooks();
+getFromLocalStorage();
 displayBooks();
-closeForm();
 
 function Book(title, author, pages, read) {
     this.title = title,
@@ -29,9 +28,16 @@ function addSomeBooks() {
     myLibrary.push(book);
     book = new Book("A Game of Thrones", "George R.R. Martin", "720", true);
     myLibrary.push(book);
+    resetBookList();
+    displayBooks();
+    addToLocalStorage();
 }
 
 function addBookToLibrary() {
+    if (myLibrary === null) {
+        myLibrary = [];
+    }
+
     book = new Book(
         document.querySelector("#book-title").value,
         document.querySelector("#book-author").value,
@@ -46,6 +52,7 @@ function addBookToLibrary() {
     document.querySelector("#book-read").checked = false;
     resetBookList();
     displayBooks();
+    addToLocalStorage();
 }
 
 function resetBookList() {
@@ -53,6 +60,10 @@ function resetBookList() {
 }
 
 function displayBooks() {
+    if (myLibrary === null) {
+        return;
+    }
+
     for (i = 0; i < myLibrary.length; i++) {
         const bookCard = document.createElement("div");
         const bookCardTitle = document.createElement("div");
@@ -67,7 +78,7 @@ function displayBooks() {
         bookCardPages.classList.add("book-card-pages");
         bookCardRead.classList.add("book-card-read");
 
-        bookCard.setAttribute("data-number", `${i}`);
+        bookCard.setAttribute("data-number", i);
 
         bookCardTitle.textContent = myLibrary[i].title;
         bookCardAuthor.textContent = myLibrary[i].author;
@@ -93,19 +104,21 @@ function displayBooks() {
 
 function openForm() {
     content.classList.add("blur");
-    addBookForm.style.display = "block";
-
+    addBookFormContainer.style.display = "block";
 }
 
 function closeForm() {
     content.classList.remove("blur");
-    addBookForm.style.display = "none";
+    addBookFormContainer.style.display = "none";
 }
 
 function deleteBook() {
     attribute = this.parentElement.getAttribute("data-number");
     myLibrary.splice(attribute, 1);
     this.parentElement.remove();
+    resetBookList();
+    displayBooks();
+    addToLocalStorage();
 }
 
 function toggleRead() {
@@ -117,4 +130,17 @@ function toggleRead() {
         myLibrary[attribute].read = true;
         this.textContent = "Read";
     }
+    addToLocalStorage();
+}
+
+function addToLocalStorage() {
+    localStorage.setItem("myLibraryLocal", JSON.stringify(myLibrary));
+}
+
+function getFromLocalStorage() {
+    myLibrary = JSON.parse(localStorage.getItem("myLibraryLocal"));
+}
+
+function clearLocalStorage() {
+    localStorage.clear();
 }
