@@ -23,27 +23,34 @@
     <div class="add-book-form-container">
         <div class="add-book-form">
             <div>
-                <p>Book title</p>
+                Book title<br />
                 <input type=text id="book-title" maxlength="30">
             </div>
             <div>
-                <p>Book author</p>
+                Book author<br />
                 <input type=text id="book-author">
             </div>
             <div>
-                <p>Book pages</p>
+                Book pages<br />
                 <input type=number id="book-pages" min="0">
             </div>
             <div>
-                <p>Read</p>
-                <input type=checkbox id="book-read">
+                <div>
+                    <label for="book-read"> 
+                        Read
+                        <input type=checkbox id="book-read"> 
+                    </label>
+                </div>
             </div>
-            <div>
-                <button id="submit-button">Submit</button>
+            <div class="add-book-form-buttons-row">
+                <div>
+                    <button id="submit-button">Submit</button>
+                </div>
+                <div>
+                    <button id="cancel-submit-button">Cancel</button>
+                </div>
             </div>
-            <div>
-                <button id="cancel-submit-button">Cancel</button>
-            </div>
+
         </div>
     </div>
     <script src="script.js"></script>

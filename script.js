@@ -67,32 +67,46 @@ function displayBooks() {
     for (i = 0; i < myLibrary.length; i++) {
         const bookCard = document.createElement("div");
         const bookCardTitle = document.createElement("div");
+        const bookCardTitleSmall = document.createElement("div");
         const bookCardAuthor = document.createElement("div");
+        const bookCardAuthorSmall = document.createElement("div");
         const bookCardPages = document.createElement("div");
+        const bookCardPagesSmall = document.createElement("div");
         const bookCardRead = document.createElement("div")
         const bookCardDelete = document.createElement("button");
 
         bookCard.classList.add("book-card");
         bookCardTitle.classList.add("book-card-title");
+        bookCardTitleSmall.classList.add("small-text")
         bookCardAuthor.classList.add("book-card-author");
+        bookCardAuthorSmall.classList.add("small-text")
         bookCardPages.classList.add("book-card-pages");
+        bookCardPagesSmall.classList.add("small-text");
         bookCardRead.classList.add("book-card-read");
 
         bookCard.setAttribute("data-number", i);
 
         bookCardTitle.textContent = myLibrary[i].title;
+        bookCardTitleSmall.textContent = "title"
         bookCardAuthor.textContent = myLibrary[i].author;
+        bookCardAuthorSmall.textContent = "author"
         bookCardPages.textContent = myLibrary[i].pages;
+        bookCardPagesSmall.textContent = "pages";
         if (myLibrary[i].read) {
             bookCardRead.textContent = "Read";
+            bookCardRead.classList.add("green");
         } else {
             bookCardRead.textContent = "Not read";
+            bookCardRead.classList.add("red");
         }
         bookCardDelete.textContent = "Delete book";
 
         bookCard.appendChild(bookCardTitle);
+        bookCard.appendChild(bookCardTitleSmall);
         bookCard.appendChild(bookCardAuthor);
+        bookCard.appendChild(bookCardAuthorSmall);
         bookCard.appendChild(bookCardPages);
+        bookCard.appendChild(bookCardPagesSmall);
         bookCard.appendChild(bookCardRead);
         bookCard.appendChild(bookCardDelete);
         bookList.appendChild(bookCard);
@@ -126,9 +140,13 @@ function toggleRead() {
     if (myLibrary[attribute].read) {
         myLibrary[attribute].read = false;
         this.textContent = "Not read";
+        this.classList.remove("green");
+        this.classList.add("red");
     } else {
         myLibrary[attribute].read = true;
         this.textContent = "Read";
+        this.classList.remove("red");
+        this.classList.add("green");
     }
     addToLocalStorage();
 }
