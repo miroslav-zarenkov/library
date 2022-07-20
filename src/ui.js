@@ -1,5 +1,5 @@
 export { renderPage };
-import "./style.css";
+import "./style.scss";
 import GithubLogo from "./github.png";
 import { getFromLocalStorage } from "./logic";
 
