@@ -1,17 +1,14 @@
-export { addToLocalStorage, getFromLocalStorage, clearLocalStorage };
+export {
+  addToLocalStorage,
+  getFromLocalStorage,
+  clearLocalStorage,
+  openForm,
+  closeForm,
+};
 let myLibrary = [];
 let book;
-let submitButton = document.querySelector("#submit-button");
-let cancelSubmitButton = document.querySelector("#cancel-submit-button");
-let bookList = document.querySelector(".book-list");
-let addBookFormContainer = document.querySelector(".add-book-form-container");
-let addBookButton = document.querySelector("#add-book-button");
-let content = document.querySelector(".main-content");
 
-/* submitButton.addEventListener("click", addBookToLibrary);
-submitButton.addEventListener("click", closeForm);
-cancelSubmitButton.addEventListener("click", closeForm);
-addBookButton.addEventListener("click", openForm); */
+let bookList = document.querySelector(".book-list");
 
 /* getFromLocalStorage();
 displayBooks(); */
@@ -32,7 +29,7 @@ class Book {
   }
 }
 
-function addSomeBooks() {
+const addSomeBooks = () => {
   book = new Book("The Wisdom Of Crowds", "Joe Abercrombie", "528", false);
   myLibrary.push(book);
   book = new Book("A Game of Thrones", "George R.R. Martin", "720", true);
@@ -40,9 +37,9 @@ function addSomeBooks() {
   resetBookList();
   displayBooks();
   addToLocalStorage();
-}
+};
 
-function addBookToLibrary() {
+const addBookToLibrary = () => {
   if (myLibrary === null) {
     myLibrary = [];
   }
@@ -62,13 +59,13 @@ function addBookToLibrary() {
   resetBookList();
   displayBooks();
   addToLocalStorage();
-}
+};
 
-function resetBookList() {
+const resetBookList = () => {
   bookList.innerHTML = "";
-}
+};
 
-function displayBooks() {
+const displayBooks = () => {
   if (myLibrary === null) {
     return;
   }
@@ -123,28 +120,28 @@ function displayBooks() {
     bookCardDelete.addEventListener("click", deleteBook);
     bookCardRead.addEventListener("click", toggleRead);
   }
-}
+};
 
-function openForm() {
-  content.classList.add("blur");
-  addBookFormContainer.style.display = "block";
-}
+const openForm = () => {
+  document.querySelector(".main-wrapper").classList.add("blur");
+  document.querySelector(".add-book-form-container").style.display = "block";
+};
 
-function closeForm() {
-  content.classList.remove("blur");
-  addBookFormContainer.style.display = "none";
-}
+const closeForm = () => {
+  document.querySelector(".main-wrapper").classList.remove("blur");
+  document.querySelector(".add-book-form-container").style.display = "none";
+};
 
-function deleteBook() {
+const deleteBook = () => {
   let attribute = this.parentElement.getAttribute("data-number");
   myLibrary.splice(attribute, 1);
   this.parentElement.remove();
   resetBookList();
   displayBooks();
   addToLocalStorage();
-}
+};
 
-function toggleRead() {
+const toggleRead = () => {
   let attribute = this.parentElement.getAttribute("data-number");
   if (myLibrary[attribute].read) {
     myLibrary[attribute].read = false;
@@ -158,7 +155,7 @@ function toggleRead() {
     this.classList.add("green");
   }
   addToLocalStorage();
-}
+};
 
 const addToLocalStorage = () => {
   localStorage.setItem("myLibraryLocal", JSON.stringify(myLibrary));

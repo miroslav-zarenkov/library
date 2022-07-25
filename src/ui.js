@@ -1,7 +1,7 @@
 export { renderPage };
 import "./style.scss";
 import GithubLogo from "./github.png";
-import { getFromLocalStorage } from "./logic";
+import { getFromLocalStorage, openForm } from "./logic";
 
 const createWrapper = () => {
   const mainWrapper = document.createElement("div");
@@ -75,11 +75,19 @@ const createPage = (event) => {
   document.body.appendChild(createWrapper());
   document.querySelector(".main-wrapper").appendChild(createHeader());
   document.querySelector(".main-wrapper").appendChild(createMain());
-  document.querySelector(".main-wrapper").appendChild(createForm());
+
   document.querySelector(".main-wrapper").appendChild(createFooter());
+  document.body.appendChild(createForm());
 };
 
 const renderPage = (event) => {
   getFromLocalStorage();
   createPage(event);
+  /*   let submitButton = document.querySelector("#submit-button");
+  let cancelSubmitButton = document.querySelector("#cancel-submit-button"); */
+  let addBookButton = document.querySelector(".add-book-button");
+  /*  submitButton.addEventListener("click", addBookToLibrary);
+  submitButton.addEventListener("click", closeForm);
+  cancelSubmitButton.addEventListener("click", closeForm); */
+  addBookButton.addEventListener("click", openForm);
 };
