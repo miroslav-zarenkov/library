@@ -4,21 +4,12 @@ export {
   clearLocalStorage,
   openForm,
   closeForm,
+  addBookToLibrary,
+  displayBooks,
+  myLibrary,
+  addSomeBooks,
 };
 let myLibrary = [];
-let book;
-
-let bookList = document.querySelector(".book-list");
-
-/* getFromLocalStorage();
-displayBooks(); */
-
-// function Book(title, author, pages, read) {
-//     this.title = title,
-//         this.author = author,
-//         this.pages = pages,
-//         this.read = read
-// }
 
 class Book {
   constructor(title, author, pages, read) {
@@ -30,12 +21,11 @@ class Book {
 }
 
 const addSomeBooks = () => {
+  let book;
   book = new Book("The Wisdom Of Crowds", "Joe Abercrombie", "528", false);
   myLibrary.push(book);
   book = new Book("A Game of Thrones", "George R.R. Martin", "720", true);
   myLibrary.push(book);
-  resetBookList();
-  displayBooks();
   addToLocalStorage();
 };
 
@@ -43,7 +33,7 @@ const addBookToLibrary = () => {
   if (myLibrary === null) {
     myLibrary = [];
   }
-
+  let book;
   book = new Book(
     document.querySelector("#book-title").value,
     document.querySelector("#book-author").value,
@@ -52,17 +42,14 @@ const addBookToLibrary = () => {
   );
 
   myLibrary.push(book);
-  document.querySelector("#book-title").value = "";
-  document.querySelector("#book-author").value = "";
-  document.querySelector("#book-pages").value = "";
-  document.querySelector("#book-read").checked = false;
+  clearFormInputs();
   resetBookList();
   displayBooks();
   addToLocalStorage();
 };
 
 const resetBookList = () => {
-  bookList.innerHTML = "";
+  document.querySelector(".book-list").innerHTML = "";
 };
 
 const displayBooks = () => {
@@ -70,7 +57,7 @@ const displayBooks = () => {
     return;
   }
 
-  for (i = 0; i < myLibrary.length; i++) {
+  for (let i = 0; i < myLibrary.length; i++) {
     const bookCard = document.createElement("div");
     const bookCardTitle = document.createElement("div");
     const bookCardTitleSmall = document.createElement("div");
@@ -115,7 +102,7 @@ const displayBooks = () => {
     bookCard.appendChild(bookCardPagesSmall);
     bookCard.appendChild(bookCardRead);
     bookCard.appendChild(bookCardDelete);
-    bookList.appendChild(bookCard);
+    document.querySelector(".book-list").appendChild(bookCard);
 
     bookCardDelete.addEventListener("click", deleteBook);
     bookCardRead.addEventListener("click", toggleRead);
@@ -130,29 +117,30 @@ const openForm = () => {
 const closeForm = () => {
   document.querySelector(".main-wrapper").classList.remove("blur");
   document.querySelector(".add-book-form-container").style.display = "none";
+  clearFormInputs();
 };
 
-const deleteBook = () => {
-  let attribute = this.parentElement.getAttribute("data-number");
+const deleteBook = (e) => {
+  let attribute = e.target.parentElement.getAttribute("data-number");
   myLibrary.splice(attribute, 1);
-  this.parentElement.remove();
+  e.target.parentElement.remove();
   resetBookList();
   displayBooks();
   addToLocalStorage();
 };
 
-const toggleRead = () => {
-  let attribute = this.parentElement.getAttribute("data-number");
+const toggleRead = (e) => {
+  let attribute = e.target.parentElement.getAttribute("data-number");
   if (myLibrary[attribute].read) {
     myLibrary[attribute].read = false;
-    this.textContent = "Not read";
-    this.classList.remove("green");
-    this.classList.add("red");
+    e.target.textContent = "Not read";
+    e.target.classList.remove("green");
+    e.target.classList.add("red");
   } else {
     myLibrary[attribute].read = true;
-    this.textContent = "Read";
-    this.classList.remove("red");
-    this.classList.add("green");
+    e.target.textContent = "Read";
+    e.target.classList.remove("red");
+    e.target.classList.add("green");
   }
   addToLocalStorage();
 };
@@ -167,4 +155,11 @@ const getFromLocalStorage = () => {
 
 const clearLocalStorage = () => {
   localStorage.clear();
+};
+
+const clearFormInputs = () => {
+  document.querySelector("#book-title").value = "";
+  document.querySelector("#book-author").value = "";
+  document.querySelector("#book-pages").value = "";
+  document.querySelector("#book-read").checked = false;
 };

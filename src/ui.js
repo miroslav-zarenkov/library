@@ -1,7 +1,16 @@
 export { renderPage };
 import "./style.scss";
 import GithubLogo from "./github.png";
-import { getFromLocalStorage, openForm } from "./logic";
+import {
+  getFromLocalStorage,
+  openForm,
+  closeForm,
+  addBookToLibrary,
+  displayBooks,
+  myLibrary,
+  clearLocalStorage,
+  addSomeBooks,
+} from "./logic";
 
 const createWrapper = () => {
   const mainWrapper = document.createElement("div");
@@ -29,9 +38,53 @@ const createForm = () => {
   const formBookTitleInput = document.createElement("input");
   formBookTitleInput.setAttribute("type", "text");
   formBookTitleInput.setAttribute("id", "book-title");
+  formBookTitleInput.setAttribute("name", "book-title");
   formBookTitleInput.setAttribute("maxlength", "30");
+  formBookTitleInput.setAttribute("placeholder", "1984");
+  const formBookAuthor = document.createElement("label");
+  formBookAuthor.textContent = "Author";
+  const formBookAuthorInput = document.createElement("input");
+  formBookAuthorInput.setAttribute("type", "text");
+  formBookAuthorInput.setAttribute("id", "book-author");
+  formBookAuthorInput.setAttribute("name", "book-author");
+  formBookAuthorInput.setAttribute("maxlength", "30");
+  formBookAuthorInput.setAttribute("placeholder", "George Orwell");
+  const formBookPages = document.createElement("label");
+  formBookPages.textContent = "Pages";
+  const formBookPagesInput = document.createElement("input");
+  formBookPagesInput.setAttribute("type", "number");
+  formBookPagesInput.setAttribute("id", "book-pages");
+  formBookPagesInput.setAttribute("name", "book-pages");
+  formBookPagesInput.setAttribute("min", "0");
+  formBookPagesInput.setAttribute("max", "9999");
+  formBookPagesInput.setAttribute("placeholder", "328");
+  const formBookRead = document.createElement("label");
+  formBookRead.textContent = "Read";
+  const formBookReadInput = document.createElement("input");
+  formBookReadInput.setAttribute("type", "checkbox");
+  formBookReadInput.setAttribute("id", "book-read");
+  formBookReadInput.setAttribute("name", "book-read");
+  const formBookButtonsWrapper = document.createElement("div");
+  formBookButtonsWrapper.classList.add("form-btn-wrapper");
+  const formBookSubmit = document.createElement("button");
+  formBookSubmit.textContent = "Submit";
+  formBookSubmit.classList.add("submit-form-button");
+  formBookSubmit.setAttribute("type", "submit");
+  const formBookCancel = document.createElement("button");
+  formBookCancel.textContent = "Cancel";
+  formBookCancel.classList.add("cancel-form-button");
+  formBookCancel.setAttribute("type", "button");
   formBookTitle.appendChild(formBookTitleInput);
+  formBookAuthor.appendChild(formBookAuthorInput);
+  formBookPages.appendChild(formBookPagesInput);
+  formBookRead.appendChild(formBookReadInput);
+  formBookButtonsWrapper.appendChild(formBookSubmit);
+  formBookButtonsWrapper.appendChild(formBookCancel);
   formDivFormWrapper.appendChild(formBookTitle);
+  formDivFormWrapper.appendChild(formBookAuthor);
+  formDivFormWrapper.appendChild(formBookPages);
+  formDivFormWrapper.appendChild(formBookRead);
+  formDivFormWrapper.appendChild(formBookButtonsWrapper);
   formDiv.appendChild(formDivFormWrapper);
 
   return formDiv;
@@ -75,19 +128,22 @@ const createPage = (event) => {
   document.body.appendChild(createWrapper());
   document.querySelector(".main-wrapper").appendChild(createHeader());
   document.querySelector(".main-wrapper").appendChild(createMain());
-
   document.querySelector(".main-wrapper").appendChild(createFooter());
   document.body.appendChild(createForm());
 };
 
 const renderPage = (event) => {
   getFromLocalStorage();
+  console.log(myLibrary);
   createPage(event);
-  /*   let submitButton = document.querySelector("#submit-button");
-  let cancelSubmitButton = document.querySelector("#cancel-submit-button"); */
-  let addBookButton = document.querySelector(".add-book-button");
-  /*  submitButton.addEventListener("click", addBookToLibrary);
-  submitButton.addEventListener("click", closeForm);
-  cancelSubmitButton.addEventListener("click", closeForm); */
-  addBookButton.addEventListener("click", openForm);
+  document
+    .querySelector(".add-book-button")
+    .addEventListener("click", openForm);
+  document
+    .querySelector(".submit-form-button")
+    .addEventListener("click", addBookToLibrary);
+  document
+    .querySelector(".cancel-form-button")
+    .addEventListener("click", closeForm);
+  displayBooks();
 };
