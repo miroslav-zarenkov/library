@@ -10,6 +10,7 @@ import {
   myLibrary,
   clearLocalStorage,
   addSomeBooks,
+  submitForm,
 } from "./logic";
 
 const createWrapper = () => {
@@ -34,14 +35,23 @@ const createForm = () => {
   const formDivFormWrapper = document.createElement("form");
   formDivFormWrapper.classList.add("add-book-form");
   const formBookTitle = document.createElement("label");
-  formBookTitle.textContent = "Title";
+  const formBookTitlePara = document.createElement("p");
+  formBookTitlePara.textContent = "Title";
+  formBookTitle.appendChild(formBookTitlePara);
   const formBookTitleInput = document.createElement("input");
   formBookTitleInput.setAttribute("type", "text");
   formBookTitleInput.setAttribute("id", "book-title");
   formBookTitleInput.setAttribute("name", "book-title");
   formBookTitleInput.setAttribute("maxlength", "30");
   formBookTitleInput.setAttribute("placeholder", "1984");
+  formBookTitleInput.setAttribute("required", "");
+  const formBookTitleSpan = document.createElement("span");
+  formBookTitleSpan.classList.add("error-span", "hidden");
+  formBookTitleSpan.setAttribute("id", "title-error-span");
   const formBookAuthor = document.createElement("label");
+  const formBookAuthorPara = document.createElement("p");
+  formBookAuthorPara.textContent = "Author";
+  formBookAuthor.appendChild(formBookAuthorPara);
   formBookAuthor.textContent = "Author";
   const formBookAuthorInput = document.createElement("input");
   formBookAuthorInput.setAttribute("type", "text");
@@ -49,7 +59,14 @@ const createForm = () => {
   formBookAuthorInput.setAttribute("name", "book-author");
   formBookAuthorInput.setAttribute("maxlength", "30");
   formBookAuthorInput.setAttribute("placeholder", "George Orwell");
+  formBookAuthorInput.setAttribute("required", "");
+  const formBookAuthorSpan = document.createElement("span");
+  formBookAuthorSpan.classList.add("error-span", "hidden");
+  formBookAuthorSpan.setAttribute("id", "author-error-span");
   const formBookPages = document.createElement("label");
+  const formBookPagesPara = document.createElement("p");
+  formBookPagesPara.textContent = "Pages";
+  formBookPages.appendChild(formBookPagesPara);
   formBookPages.textContent = "Pages";
   const formBookPagesInput = document.createElement("input");
   formBookPagesInput.setAttribute("type", "number");
@@ -58,6 +75,10 @@ const createForm = () => {
   formBookPagesInput.setAttribute("min", "0");
   formBookPagesInput.setAttribute("max", "9999");
   formBookPagesInput.setAttribute("placeholder", "328");
+  formBookPagesInput.setAttribute("required", "");
+  const formBookPagesSpan = document.createElement("span");
+  formBookPagesSpan.classList.add("error-span", "hidden");
+  formBookPagesSpan.setAttribute("id", "pages-error-span");
   const formBookRead = document.createElement("label");
   formBookRead.textContent = "Read";
   const formBookReadInput = document.createElement("input");
@@ -75,8 +96,11 @@ const createForm = () => {
   formBookCancel.classList.add("cancel-form-button");
   formBookCancel.setAttribute("type", "button");
   formBookTitle.appendChild(formBookTitleInput);
+  formBookTitle.appendChild(formBookTitleSpan);
   formBookAuthor.appendChild(formBookAuthorInput);
+  formBookAuthor.appendChild(formBookAuthorSpan);
   formBookPages.appendChild(formBookPagesInput);
+  formBookPages.appendChild(formBookPagesSpan);
   formBookRead.appendChild(formBookReadInput);
   formBookButtonsWrapper.appendChild(formBookSubmit);
   formBookButtonsWrapper.appendChild(formBookCancel);
@@ -139,9 +163,12 @@ const renderPage = (event) => {
   document
     .querySelector(".add-book-button")
     .addEventListener("click", openForm);
+  /*   document
+    .querySelector(".submit-form-button")
+    .addEventListener("click", addBookToLibrary); */
   document
     .querySelector(".submit-form-button")
-    .addEventListener("click", addBookToLibrary);
+    .addEventListener("click", submitForm);
   document
     .querySelector(".cancel-form-button")
     .addEventListener("click", closeForm);

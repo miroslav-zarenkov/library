@@ -8,6 +8,7 @@ export {
   displayBooks,
   myLibrary,
   addSomeBooks,
+  submitForm,
 };
 let myLibrary = [];
 
@@ -42,7 +43,8 @@ const addBookToLibrary = () => {
   );
 
   myLibrary.push(book);
-  clearFormInputs();
+  /* clearFormInputs(); */
+  closeForm();
   resetBookList();
   displayBooks();
   addToLocalStorage();
@@ -162,4 +164,47 @@ const clearFormInputs = () => {
   document.querySelector("#book-author").value = "";
   document.querySelector("#book-pages").value = "";
   document.querySelector("#book-read").checked = false;
+};
+
+const submitForm = (event) => {
+  event.preventDefault();
+  console.log("submit button works");
+  const inputTitle = document.querySelector("#book-title");
+  const inputAuthor = document.querySelector("#book-author");
+  const inputPages = document.querySelector("#book-pages");
+
+  if (inputTitle.validity.valid) {
+    console.log("title ok");
+    document.querySelector("#title-error-span").textContent = "";
+    document.querySelector("#title-error-span").classList.add("hidden");
+  } else {
+    console.log("title error");
+    document.querySelector("#title-error-span").textContent = "STUPID";
+    document.querySelector("#title-error-span").classList.remove("hidden");
+  }
+  if (inputAuthor.validity.valid) {
+    console.log("author ok");
+    document.querySelector("#author-error-span").textContent = "";
+    document.querySelector("#author-error-span").classList.add("hidden");
+  } else {
+    console.log("author error");
+    document.querySelector("#author-error-span").textContent = "STUPID";
+    document.querySelector("#author-error-span").classList.remove("hidden");
+  }
+  if (inputPages.validity.valid) {
+    console.log("pages ok");
+    document.querySelector("#pages-error-span").textContent = "";
+    document.querySelector("#pages-error-span").classList.add("hidden");
+  } else {
+    console.log("pages error");
+    document.querySelector("#pages-error-span").textContent = "STUPID";
+    document.querySelector("#pages-error-span").classList.remove("hidden");
+  }
+  if (
+    inputTitle.validity.valid &&
+    inputAuthor.validity.valid &&
+    inputPages.validity.valid
+  ) {
+    addBookToLibrary();
+  }
 };

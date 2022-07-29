@@ -96,12 +96,13 @@ footer > * {
 
 .add-book-form {
   @extend %flex-center;
-  background-color: rgb(232, 240, 160);
-  border: 5px solid black;
+  background-color: rgb(204, 219, 245);
+  height: 40rem;
   width: 25rem;
-  height: 35rem;
   flex-direction: column;
-  font-size: 24px;
+  padding: 2rem;
+  border: 3px solid black;
+  border-radius: 2rem;
 }
 
 .book-list {
@@ -199,9 +200,21 @@ label {
   padding: 0.5rem;
 }
 
+.error-span {
+  @include font-size(1.5rem);
+  color: red;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
 input[type="text"],
 input[type="number"] {
   width: 20rem;
+  &:invalid {
+    border-color: red;
+  }
 }
 
 %book-card-info {
