@@ -9,6 +9,7 @@ export {
   myLibrary,
   addSomeBooks,
   submitForm,
+  inputValidation,
 };
 let myLibrary = [];
 
@@ -43,7 +44,6 @@ const addBookToLibrary = () => {
   );
 
   myLibrary.push(book);
-  /* clearFormInputs(); */
   closeForm();
   resetBookList();
   displayBooks();
@@ -168,12 +168,11 @@ const clearFormInputs = () => {
 
 const submitForm = (event) => {
   event.preventDefault();
-  console.log("submit button works");
   const inputTitle = document.querySelector("#book-title");
   const inputAuthor = document.querySelector("#book-author");
   const inputPages = document.querySelector("#book-pages");
 
-  if (inputTitle.validity.valid) {
+  /* if (inputTitle.validity.valid) {
     console.log("title ok");
     document.querySelector("#title-error-span").textContent = "";
     document.querySelector("#title-error-span").classList.add("hidden");
@@ -199,7 +198,7 @@ const submitForm = (event) => {
     console.log("pages error");
     document.querySelector("#pages-error-span").textContent = "STUPID";
     document.querySelector("#pages-error-span").classList.remove("hidden");
-  }
+  } */
   if (
     inputTitle.validity.valid &&
     inputAuthor.validity.valid &&
@@ -207,4 +206,46 @@ const submitForm = (event) => {
   ) {
     addBookToLibrary();
   }
+};
+
+const inputValidation = () => {
+  const inputTitle = document.querySelector("#book-title");
+  const inputAuthor = document.querySelector("#book-author");
+  const inputPages = document.querySelector("#book-pages");
+
+  const bookTitleValidation = () => {
+    if (inputTitle.validity.valid) {
+      console.log("title ok");
+      inputTitle.classList.remove("invalid-data");
+      document.querySelector("#title-error-p").textContent = "Everything OK!";
+      document.querySelector("#title-error-p").classList.add("hidden");
+    } else if (inputTitle.validity.valueMissing) {
+      console.log("title error");
+      inputTitle.classList.add("invalid-data");
+      document.querySelector("#title-error-p").textContent =
+        "You forgot book title";
+      document.querySelector("#title-error-p").classList.remove("hidden");
+    } else {
+      console.log("title error");
+      inputTitle.classList.add("invalid-data");
+      document.querySelector("#title-error-p").textContent =
+        "What is this error";
+      document.querySelector("#title-error-p").classList.remove("hidden");
+    }
+    if (inputTitle.value.length === 30) {
+      inputTitle.classList.add("invalid-data");
+      document.querySelector("#title-error-p").textContent =
+        "Maximum 30 characters";
+      document.querySelector("#title-error-p").classList.remove("hidden");
+    }
+  };
+
+  inputTitle.addEventListener("input", bookTitleValidation);
+  inputTitle.addEventListener("focusout", bookTitleValidation);
+  document.querySelector("#book-author").addEventListener("input", () => {
+    console.log("kek2");
+  });
+  document.querySelector("#book-pages").addEventListener("input", () => {
+    console.log("kek3");
+  });
 };

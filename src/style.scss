@@ -200,7 +200,7 @@ label {
   padding: 0.5rem;
 }
 
-.error-span {
+.error-p {
   @include font-size(1.5rem);
   color: red;
 }
@@ -212,9 +212,10 @@ label {
 input[type="text"],
 input[type="number"] {
   width: 20rem;
-  &:invalid {
-    border-color: red;
-  }
+}
+input.invalid-data {
+  border-color: red;
+  outline-color: red;
 }
 
 %book-card-info {

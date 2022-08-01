@@ -11,6 +11,7 @@ import {
   clearLocalStorage,
   addSomeBooks,
   submitForm,
+  inputValidation,
 } from "./logic";
 
 const createWrapper = () => {
@@ -45,9 +46,10 @@ const createForm = () => {
   formBookTitleInput.setAttribute("maxlength", "30");
   formBookTitleInput.setAttribute("placeholder", "1984");
   formBookTitleInput.setAttribute("required", "");
-  const formBookTitleSpan = document.createElement("span");
-  formBookTitleSpan.classList.add("error-span", "hidden");
-  formBookTitleSpan.setAttribute("id", "title-error-span");
+  const formBookTitleErrorPara = document.createElement("p");
+  formBookTitleErrorPara.classList.add("error-p", "hidden");
+  formBookTitleErrorPara.setAttribute("id", "title-error-p");
+  formBookTitleErrorPara.textContent = "Everything OK!";
   const formBookAuthor = document.createElement("label");
   const formBookAuthorPara = document.createElement("p");
   formBookAuthorPara.textContent = "Author";
@@ -60,9 +62,10 @@ const createForm = () => {
   formBookAuthorInput.setAttribute("maxlength", "30");
   formBookAuthorInput.setAttribute("placeholder", "George Orwell");
   formBookAuthorInput.setAttribute("required", "");
-  const formBookAuthorSpan = document.createElement("span");
-  formBookAuthorSpan.classList.add("error-span", "hidden");
-  formBookAuthorSpan.setAttribute("id", "author-error-span");
+  const formBookAuthorErrorPara = document.createElement("p");
+  formBookAuthorErrorPara.classList.add("error-p", "hidden");
+  formBookAuthorErrorPara.setAttribute("id", "author-error-p");
+  formBookAuthorErrorPara.textContent = "Everything OK!";
   const formBookPages = document.createElement("label");
   const formBookPagesPara = document.createElement("p");
   formBookPagesPara.textContent = "Pages";
@@ -76,9 +79,10 @@ const createForm = () => {
   formBookPagesInput.setAttribute("max", "9999");
   formBookPagesInput.setAttribute("placeholder", "328");
   formBookPagesInput.setAttribute("required", "");
-  const formBookPagesSpan = document.createElement("span");
-  formBookPagesSpan.classList.add("error-span", "hidden");
-  formBookPagesSpan.setAttribute("id", "pages-error-span");
+  const formBookPagesErrorPara = document.createElement("p");
+  formBookPagesErrorPara.classList.add("error-p", "hidden");
+  formBookPagesErrorPara.setAttribute("id", "pages-error-p");
+  formBookPagesErrorPara.textContent = "Everything OK!";
   const formBookRead = document.createElement("label");
   formBookRead.textContent = "Read";
   const formBookReadInput = document.createElement("input");
@@ -96,11 +100,11 @@ const createForm = () => {
   formBookCancel.classList.add("cancel-form-button");
   formBookCancel.setAttribute("type", "button");
   formBookTitle.appendChild(formBookTitleInput);
-  formBookTitle.appendChild(formBookTitleSpan);
+  formBookTitle.appendChild(formBookTitleErrorPara);
   formBookAuthor.appendChild(formBookAuthorInput);
-  formBookAuthor.appendChild(formBookAuthorSpan);
+  formBookAuthor.appendChild(formBookAuthorErrorPara);
   formBookPages.appendChild(formBookPagesInput);
-  formBookPages.appendChild(formBookPagesSpan);
+  formBookPages.appendChild(formBookPagesErrorPara);
   formBookRead.appendChild(formBookReadInput);
   formBookButtonsWrapper.appendChild(formBookSubmit);
   formBookButtonsWrapper.appendChild(formBookCancel);
@@ -173,4 +177,5 @@ const renderPage = (event) => {
     .querySelector(".cancel-form-button")
     .addEventListener("click", closeForm);
   displayBooks();
+  inputValidation();
 };
