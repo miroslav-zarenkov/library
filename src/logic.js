@@ -9,7 +9,7 @@ export {
   myLibrary,
   addSomeBooks,
   submitForm,
-  inputValidation,
+  formTextInputValidation,
 };
 let myLibrary = [];
 
@@ -171,34 +171,6 @@ const submitForm = (event) => {
   const inputTitle = document.querySelector("#book-title");
   const inputAuthor = document.querySelector("#book-author");
   const inputPages = document.querySelector("#book-pages");
-
-  /* if (inputTitle.validity.valid) {
-    console.log("title ok");
-    document.querySelector("#title-error-span").textContent = "";
-    document.querySelector("#title-error-span").classList.add("hidden");
-  } else {
-    console.log("title error");
-    document.querySelector("#title-error-span").textContent = "STUPID";
-    document.querySelector("#title-error-span").classList.remove("hidden");
-  }
-  if (inputAuthor.validity.valid) {
-    console.log("author ok");
-    document.querySelector("#author-error-span").textContent = "";
-    document.querySelector("#author-error-span").classList.add("hidden");
-  } else {
-    console.log("author error");
-    document.querySelector("#author-error-span").textContent = "STUPID";
-    document.querySelector("#author-error-span").classList.remove("hidden");
-  }
-  if (inputPages.validity.valid) {
-    console.log("pages ok");
-    document.querySelector("#pages-error-span").textContent = "";
-    document.querySelector("#pages-error-span").classList.add("hidden");
-  } else {
-    console.log("pages error");
-    document.querySelector("#pages-error-span").textContent = "STUPID";
-    document.querySelector("#pages-error-span").classList.remove("hidden");
-  } */
   if (
     inputTitle.validity.valid &&
     inputAuthor.validity.valid &&
@@ -208,44 +180,37 @@ const submitForm = (event) => {
   }
 };
 
-const inputValidation = () => {
-  const inputTitle = document.querySelector("#book-title");
-  const inputAuthor = document.querySelector("#book-author");
-  const inputPages = document.querySelector("#book-pages");
-
-  const bookTitleValidation = () => {
-    if (inputTitle.validity.valid) {
-      console.log("title ok");
-      inputTitle.classList.remove("invalid-data");
-      document.querySelector("#title-error-p").textContent = "Everything OK!";
-      document.querySelector("#title-error-p").classList.add("hidden");
-    } else if (inputTitle.validity.valueMissing) {
-      console.log("title error");
-      inputTitle.classList.add("invalid-data");
-      document.querySelector("#title-error-p").textContent =
-        "You forgot book title";
-      document.querySelector("#title-error-p").classList.remove("hidden");
-    } else {
-      console.log("title error");
-      inputTitle.classList.add("invalid-data");
-      document.querySelector("#title-error-p").textContent =
-        "What is this error";
-      document.querySelector("#title-error-p").classList.remove("hidden");
-    }
-    if (inputTitle.value.length === 30) {
-      inputTitle.classList.add("invalid-data");
-      document.querySelector("#title-error-p").textContent =
-        "Maximum 30 characters";
-      document.querySelector("#title-error-p").classList.remove("hidden");
-    }
-  };
-
-  inputTitle.addEventListener("input", bookTitleValidation);
-  inputTitle.addEventListener("focusout", bookTitleValidation);
-  document.querySelector("#book-author").addEventListener("input", () => {
-    console.log("kek2");
-  });
-  document.querySelector("#book-pages").addEventListener("input", () => {
-    console.log("kek3");
-  });
+const formTextInputValidation = (event) => {
+  if (event.target.validity.valid) {
+    console.log(event.target.id);
+    console.log("title ok");
+    event.target.classList.remove("invalid-data");
+    event.target.nextElementSibling.textContent = "Everything OK!";
+    event.target.nextElementSibling.classList.remove("error-p");
+    event.target.nextElementSibling.classList.add("hidden");
+  } else if (event.target.validity.valueMissing) {
+    console.log("title error");
+    event.target.classList.add("invalid-data");
+    event.target.id === "book-title"
+      ? (event.target.nextElementSibling.textContent = "You forgot book title")
+      : (event.target.nextElementSibling.textContent =
+          "You forgot book author");
+    event.target.nextElementSibling.classList.add("error-p");
+    event.target.classList.add("invalid-data");
+    event.target.nextElementSibling.classList.remove("hidden");
+  } else {
+    console.log("title error");
+    event.target.classList.add("invalid-data");
+    event.target.nextElementSibling.textContent = "What is this error";
+    event.target.nextElementSibling.classList.add("error-p");
+    event.target.classList.add("invalid-data");
+    event.target.nextElementSibling.classList.remove("hidden");
+  }
+  if (event.target.value.length === 30) {
+    event.target.classList.add("invalid-data");
+    event.target.nextElementSibling.textContent = "Maximum 30 characters";
+    event.target.nextElementSibling.classList.remove("hidden");
+    event.target.nextElementSibling.classList.remove("error-p");
+    event.target.classList.remove("invalid-data");
+  }
 };

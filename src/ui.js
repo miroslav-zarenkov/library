@@ -11,7 +11,7 @@ import {
   clearLocalStorage,
   addSomeBooks,
   submitForm,
-  inputValidation,
+  formTextInputValidation,
 } from "./logic";
 
 const createWrapper = () => {
@@ -47,7 +47,7 @@ const createForm = () => {
   formBookTitleInput.setAttribute("placeholder", "1984");
   formBookTitleInput.setAttribute("required", "");
   const formBookTitleErrorPara = document.createElement("p");
-  formBookTitleErrorPara.classList.add("error-p", "hidden");
+  formBookTitleErrorPara.classList.add("hidden");
   formBookTitleErrorPara.setAttribute("id", "title-error-p");
   formBookTitleErrorPara.textContent = "Everything OK!";
   const formBookAuthor = document.createElement("label");
@@ -63,7 +63,7 @@ const createForm = () => {
   formBookAuthorInput.setAttribute("placeholder", "George Orwell");
   formBookAuthorInput.setAttribute("required", "");
   const formBookAuthorErrorPara = document.createElement("p");
-  formBookAuthorErrorPara.classList.add("error-p", "hidden");
+  formBookAuthorErrorPara.classList.add("hidden");
   formBookAuthorErrorPara.setAttribute("id", "author-error-p");
   formBookAuthorErrorPara.textContent = "Everything OK!";
   const formBookPages = document.createElement("label");
@@ -80,7 +80,7 @@ const createForm = () => {
   formBookPagesInput.setAttribute("placeholder", "328");
   formBookPagesInput.setAttribute("required", "");
   const formBookPagesErrorPara = document.createElement("p");
-  formBookPagesErrorPara.classList.add("error-p", "hidden");
+  formBookPagesErrorPara.classList.add("hidden");
   formBookPagesErrorPara.setAttribute("id", "pages-error-p");
   formBookPagesErrorPara.textContent = "Everything OK!";
   const formBookRead = document.createElement("label");
@@ -159,23 +159,34 @@ const createPage = (event) => {
   document.querySelector(".main-wrapper").appendChild(createFooter());
   document.body.appendChild(createForm());
 };
-
-const renderPage = (event) => {
-  getFromLocalStorage();
-  console.log(myLibrary);
-  createPage(event);
+const initialiseEventListeners = () => {
   document
     .querySelector(".add-book-button")
     .addEventListener("click", openForm);
-  /*   document
-    .querySelector(".submit-form-button")
-    .addEventListener("click", addBookToLibrary); */
   document
     .querySelector(".submit-form-button")
     .addEventListener("click", submitForm);
   document
     .querySelector(".cancel-form-button")
     .addEventListener("click", closeForm);
+  document
+    .querySelector("#book-title")
+    .addEventListener("input", formTextInputValidation);
+  document
+    .querySelector("#book-title")
+    .addEventListener("focusout", formTextInputValidation);
+  document
+    .querySelector("#book-author")
+    .addEventListener("input", formTextInputValidation);
+  document
+    .querySelector("#book-author")
+    .addEventListener("focusout", formTextInputValidation);
+};
+
+const renderPage = (event) => {
+  getFromLocalStorage();
+  console.log(myLibrary);
+  createPage(event);
+  initialiseEventListeners();
   displayBooks();
-  inputValidation();
 };

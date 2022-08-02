@@ -246,3 +246,17 @@ input.invalid-data {
   @extend %flex-center;
   gap: 2rem;
 }
+
+#title-error-p,
+#author-error-p {
+  @include font-size(1.5rem);
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
