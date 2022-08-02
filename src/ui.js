@@ -5,13 +5,12 @@ import {
   getFromLocalStorage,
   openForm,
   closeForm,
-  addBookToLibrary,
   displayBooks,
   myLibrary,
-  clearLocalStorage,
-  addSomeBooks,
   submitForm,
   formTextInputValidation,
+  formNumberInputValidation,
+  formNumberInputLimit,
 } from "./logic";
 
 const createWrapper = () => {
@@ -54,7 +53,6 @@ const createForm = () => {
   const formBookAuthorPara = document.createElement("p");
   formBookAuthorPara.textContent = "Author";
   formBookAuthor.appendChild(formBookAuthorPara);
-  formBookAuthor.textContent = "Author";
   const formBookAuthorInput = document.createElement("input");
   formBookAuthorInput.setAttribute("type", "text");
   formBookAuthorInput.setAttribute("id", "book-author");
@@ -70,7 +68,6 @@ const createForm = () => {
   const formBookPagesPara = document.createElement("p");
   formBookPagesPara.textContent = "Pages";
   formBookPages.appendChild(formBookPagesPara);
-  formBookPages.textContent = "Pages";
   const formBookPagesInput = document.createElement("input");
   formBookPagesInput.setAttribute("type", "number");
   formBookPagesInput.setAttribute("id", "book-pages");
@@ -84,7 +81,9 @@ const createForm = () => {
   formBookPagesErrorPara.setAttribute("id", "pages-error-p");
   formBookPagesErrorPara.textContent = "Everything OK!";
   const formBookRead = document.createElement("label");
-  formBookRead.textContent = "Read";
+  const formBookReadPara = document.createElement("p");
+  formBookReadPara.textContent = "Read";
+  formBookRead.appendChild(formBookReadPara);
   const formBookReadInput = document.createElement("input");
   formBookReadInput.setAttribute("type", "checkbox");
   formBookReadInput.setAttribute("id", "book-read");
@@ -159,6 +158,7 @@ const createPage = (event) => {
   document.querySelector(".main-wrapper").appendChild(createFooter());
   document.body.appendChild(createForm());
 };
+
 const initialiseEventListeners = () => {
   document
     .querySelector(".add-book-button")
@@ -181,12 +181,21 @@ const initialiseEventListeners = () => {
   document
     .querySelector("#book-author")
     .addEventListener("focusout", formTextInputValidation);
+  document
+    .querySelector("#book-pages")
+    .addEventListener("keypress", formNumberInputLimit);
+  document
+    .querySelector("#book-pages")
+    .addEventListener("input", formNumberInputValidation);
+  document
+    .querySelector("#book-pages")
+    .addEventListener("focusout", formNumberInputValidation);
 };
 
 const renderPage = (event) => {
-  getFromLocalStorage();
-  console.log(myLibrary);
   createPage(event);
   initialiseEventListeners();
+  getFromLocalStorage();
+  console.log(myLibrary);
   displayBooks();
 };

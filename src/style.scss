@@ -184,10 +184,16 @@ button {
 
 .green {
   background-color: $green-color;
+  &:hover {
+    background-color: darken($color: $green-color, $amount: 10%);
+  }
 }
 
 .red {
   background-color: $red-color;
+  &:hover {
+    background-color: darken($color: $red-color, $amount: 10%);
+  }
 }
 
 .small-text {
@@ -248,9 +254,11 @@ input.invalid-data {
 }
 
 #title-error-p,
-#author-error-p {
+#author-error-p,
+#pages-error-p {
   @include font-size(1.5rem);
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -259,4 +267,9 @@ input::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+}
+label {
+  p {
+    @include font-size(1.5rem);
+  }
 }

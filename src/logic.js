@@ -1,15 +1,13 @@
 export {
-  addToLocalStorage,
   getFromLocalStorage,
-  clearLocalStorage,
   openForm,
   closeForm,
-  addBookToLibrary,
   displayBooks,
   myLibrary,
-  addSomeBooks,
   submitForm,
   formTextInputValidation,
+  formNumberInputValidation,
+  formNumberInputLimit,
 };
 let myLibrary = [];
 
@@ -119,6 +117,7 @@ const openForm = () => {
 const closeForm = () => {
   document.querySelector(".main-wrapper").classList.remove("blur");
   document.querySelector(".add-book-form-container").style.display = "none";
+
   clearFormInputs();
 };
 
@@ -164,6 +163,18 @@ const clearFormInputs = () => {
   document.querySelector("#book-author").value = "";
   document.querySelector("#book-pages").value = "";
   document.querySelector("#book-read").checked = false;
+  document.querySelector("#book-title").classList.remove("invalid-data");
+  document.querySelector("#title-error-p").textContent = "Everything OK!";
+  document.querySelector("#title-error-p").classList.remove("error-p");
+  document.querySelector("#title-error-p").classList.add("hidden");
+  document.querySelector("#book-author").classList.remove("invalid-data");
+  document.querySelector("#author-error-p").textContent = "Everything OK!";
+  document.querySelector("#author-error-p").classList.remove("error-p");
+  document.querySelector("#author-error-p").classList.add("hidden");
+  document.querySelector("#book-pages").classList.remove("invalid-data");
+  document.querySelector("#pages-error-p").textContent = "Everything OK!";
+  document.querySelector("#pages-error-p").classList.remove("error-p");
+  document.querySelector("#pages-error-p").classList.add("hidden");
 };
 
 const submitForm = (event) => {
@@ -177,6 +188,34 @@ const submitForm = (event) => {
     inputPages.validity.valid
   ) {
     addBookToLibrary();
+  } else {
+    if (inputTitle.validity.valueMissing) {
+      inputTitle.classList.add("invalid-data");
+      inputTitle.id === "book-title"
+        ? (inputTitle.nextElementSibling.textContent = "You forgot book title")
+        : (inputTitle.nextElementSibling.textContent =
+            "You forgot book author");
+      inputTitle.nextElementSibling.classList.add("error-p");
+      inputTitle.classList.add("invalid-data");
+      inputTitle.nextElementSibling.classList.remove("hidden");
+    }
+    if (inputAuthor.validity.valueMissing) {
+      inputAuthor.classList.add("invalid-data");
+      inputAuthor.id === "book-title"
+        ? (inputAuthor.nextElementSibling.textContent = "You forgot book title")
+        : (inputAuthor.nextElementSibling.textContent =
+            "You forgot book author");
+      inputAuthor.nextElementSibling.classList.add("error-p");
+      inputAuthor.classList.add("invalid-data");
+      inputAuthor.nextElementSibling.classList.remove("hidden");
+    }
+    if (inputPages.validity.valueMissing) {
+      inputPages.classList.add("invalid-data");
+      inputPages.nextElementSibling.textContent = "You forgot book pages";
+      inputPages.nextElementSibling.classList.add("error-p");
+      inputPages.classList.add("invalid-data");
+      inputPages.nextElementSibling.classList.remove("hidden");
+    }
   }
 };
 
@@ -213,4 +252,32 @@ const formTextInputValidation = (event) => {
     event.target.nextElementSibling.classList.remove("error-p");
     event.target.classList.remove("invalid-data");
   }
+};
+
+const formNumberInputValidation = (event) => {
+  if (event.target.validity.valid) {
+    console.log("you are cool");
+    event.target.classList.remove("invalid-data");
+    event.target.nextElementSibling.textContent = "Everything OK!";
+    event.target.nextElementSibling.classList.remove("error-p");
+    event.target.nextElementSibling.classList.add("hidden");
+  } else {
+    console.log("number error");
+    event.target.classList.add("invalid-data");
+    event.target.nextElementSibling.textContent = "You forgot book pages";
+    event.target.nextElementSibling.classList.add("error-p");
+    event.target.classList.add("invalid-data");
+    event.target.nextElementSibling.classList.remove("hidden");
+  }
+};
+
+const formNumberInputLimit = (event) => {
+  console.log(event.key);
+  if (event.target.value.length >= 4) {
+    event.preventDefault();
+    event.target.nextElementSibling.textContent = "Max number is 9999";
+    event.target.nextElementSibling.classList.remove("hidden");
+  }
+  let invalidChars = ["-", "+", "e"];
+  if (invalidChars.includes(event.key)) event.preventDefault();
 };
