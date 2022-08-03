@@ -6,7 +6,6 @@ import {
   openForm,
   closeForm,
   displayBooks,
-  myLibrary,
   submitForm,
   formTextInputValidation,
   formNumberInputValidation,
@@ -16,7 +15,6 @@ import {
 const createWrapper = () => {
   const mainWrapper = document.createElement("div");
   mainWrapper.classList.add("main-wrapper");
-
   return mainWrapper;
 };
 
@@ -25,7 +23,6 @@ const createHeader = () => {
   const headerTitle = document.createElement("h1");
   headerTitle.textContent = "Library";
   header.appendChild(headerTitle);
-
   return header;
 };
 
@@ -82,6 +79,7 @@ const createForm = () => {
   formBookPagesErrorPara.textContent = "Everything OK!";
   const formBookRead = document.createElement("label");
   const formBookReadPara = document.createElement("p");
+  formBookReadPara.classList.add("input-read-p");
   formBookReadPara.textContent = "Read";
   formBookRead.appendChild(formBookReadPara);
   const formBookReadInput = document.createElement("input");
@@ -113,7 +111,6 @@ const createForm = () => {
   formDivFormWrapper.appendChild(formBookRead);
   formDivFormWrapper.appendChild(formBookButtonsWrapper);
   formDiv.appendChild(formDivFormWrapper);
-
   return formDiv;
 };
 
@@ -123,13 +120,12 @@ const createMain = () => {
   mainAddBook.classList.add("add-book-div");
   const mainAddBookButton = document.createElement("button");
   mainAddBookButton.classList.add("add-book-button");
-  mainAddBookButton.textContent = "Add book";
+  mainAddBookButton.textContent = "Add Book";
   const mainBookList = document.createElement("div");
   mainBookList.classList.add("book-list");
   mainAddBook.appendChild(mainAddBookButton);
   main.appendChild(mainAddBook);
   main.appendChild(mainBookList);
-
   return main;
 };
 
@@ -147,7 +143,6 @@ const createFooter = () => {
   footer.appendChild(footerDiv);
   footer.appendChild(footerLink);
   footerLink.appendChild(footerLinkImg);
-
   return footer;
 };
 
@@ -196,6 +191,5 @@ const renderPage = (event) => {
   createPage(event);
   initialiseEventListeners();
   getFromLocalStorage();
-  console.log(myLibrary);
   displayBooks();
 };

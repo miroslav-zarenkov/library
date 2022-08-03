@@ -3,7 +3,6 @@ export {
   openForm,
   closeForm,
   displayBooks,
-  myLibrary,
   submitForm,
   formTextInputValidation,
   formNumberInputValidation,
@@ -92,7 +91,7 @@ const displayBooks = () => {
       bookCardRead.textContent = "Not read";
       bookCardRead.classList.add("red");
     }
-    bookCardDelete.textContent = "Delete book";
+    bookCardDelete.textContent = "Delete Book";
 
     bookCard.appendChild(bookCardTitle);
     bookCard.appendChild(bookCardTitleSmall);
@@ -221,14 +220,11 @@ const submitForm = (event) => {
 
 const formTextInputValidation = (event) => {
   if (event.target.validity.valid) {
-    console.log(event.target.id);
-    console.log("title ok");
     event.target.classList.remove("invalid-data");
     event.target.nextElementSibling.textContent = "Everything OK!";
     event.target.nextElementSibling.classList.remove("error-p");
     event.target.nextElementSibling.classList.add("hidden");
   } else if (event.target.validity.valueMissing) {
-    console.log("title error");
     event.target.classList.add("invalid-data");
     event.target.id === "book-title"
       ? (event.target.nextElementSibling.textContent = "You forgot book title")
@@ -238,7 +234,6 @@ const formTextInputValidation = (event) => {
     event.target.classList.add("invalid-data");
     event.target.nextElementSibling.classList.remove("hidden");
   } else {
-    console.log("title error");
     event.target.classList.add("invalid-data");
     event.target.nextElementSibling.textContent = "What is this error";
     event.target.nextElementSibling.classList.add("error-p");
@@ -256,28 +251,28 @@ const formTextInputValidation = (event) => {
 
 const formNumberInputValidation = (event) => {
   if (event.target.validity.valid) {
-    console.log("you are cool");
     event.target.classList.remove("invalid-data");
     event.target.nextElementSibling.textContent = "Everything OK!";
     event.target.nextElementSibling.classList.remove("error-p");
     event.target.nextElementSibling.classList.add("hidden");
   } else {
-    console.log("number error");
     event.target.classList.add("invalid-data");
     event.target.nextElementSibling.textContent = "You forgot book pages";
     event.target.nextElementSibling.classList.add("error-p");
     event.target.classList.add("invalid-data");
     event.target.nextElementSibling.classList.remove("hidden");
   }
+  if (event.target.value.length === 4) {
+    event.target.classList.add("invalid-data");
+    event.target.nextElementSibling.textContent = "Max number is 9999";
+    event.target.nextElementSibling.classList.remove("hidden");
+    event.target.nextElementSibling.classList.remove("error-p");
+    event.target.classList.remove("invalid-data");
+  }
 };
 
 const formNumberInputLimit = (event) => {
-  console.log(event.key);
-  if (event.target.value.length >= 4) {
-    event.preventDefault();
-    event.target.nextElementSibling.textContent = "Max number is 9999";
-    event.target.nextElementSibling.classList.remove("hidden");
-  }
   let invalidChars = ["-", "+", "e"];
+  if (event.target.value.length >= 4) event.preventDefault();
   if (invalidChars.includes(event.key)) event.preventDefault();
 };
